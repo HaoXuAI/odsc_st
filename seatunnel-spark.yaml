@@ -1,60 +1,41 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: seatunnel-spark-batch-example
+  name: seatunnel-spark-example
 spec:
   type: Java
   mode: cluster
-  image: seatunnel:2.3.0-spark-3.3.3
-  imagePullPolicy: Always
+  image: docker.io/library/seatunnel:2.3.0-spark-3.3.3
+  imagePullPolicy: Never
   mainClass: org.apache.seatunnel.core.starter.spark.SeaTunnelSpark
   mainApplicationFile: "local:///opt/seatunnel/starter/seatunnel-spark-3-starter.jar"
-  arguments: ["--config", "/data/seatunnel.streaming.conf"]
+  arguments: ["--config", "/data/seatunnel.batch.conf"]
   sparkVersion: "3.3.3"
   restartPolicy:
     type: Never
   volumes:
-    - name: "test-volume"
-      hostPath:
-        path: "/tmp"
-        type: Directory
+    - name: seatunnel-config
+      configMap:
+        name: seatunnel-config
+        items:
+        - key: seatunnel.batch.conf
+          path: seatunnel.batch.conf
   driver:
     cores: 1
     coreLimit: "1200m"
     memory: "512m"
     labels:
-      version: 3.1.1
+      version: 3.3.3
     serviceAccount: spark
-    configMaps:
-      - name: seatunnel-config
-        path: seatunnel.streaming.conf
     volumeMounts:
-      - name: "test-volume"
-        mountPath: "/tmp"
+      - name: seatunnel-config
+        mountPath: /data
   executor:
     cores: 1
     instances: 1
     memory: "512m"
     labels:
-      version: 3.1.1
-    configMaps:
-      - name: seatunnel-config
-        path: seatunnel.streaming.conf
+      version: 3.3.3
     volumeMounts:
-      - name: "test-volume"
-        mountPath: "/tmp"
-  # podTemplate:
-  #   spec:
-  #     containers:
-  #       - name: spark-main-container
-  #         volumeMounts:
-  #           - name: seatunnel-config
-  #             mountPath: /data/seatunnel.streaming.conf
-  #             subPath: seatunnel.streaming.conf
-  #     volumes:
-  #       - name: seatunnel-config
-  #         configMap:
-  #           name: seatunnel-config
-  #           items:
-  #           - key: seatunnel.streaming.conf
-  #             path: seatunnel.streaming.conf
+      - name: seatunnel-config
+        mountPath: /data

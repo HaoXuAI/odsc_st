@@ -7,4 +7,4 @@ RUN wget https://dlcdn.apache.org/seatunnel/${SEATUNNEL_VERSION}/apache-seatunne
 RUN tar -xzvf apache-seatunnel-${SEATUNNEL_VERSION}-bin.tar.gz
 RUN mv apache-seatunnel-${SEATUNNEL_VERSION} ${SEATUNNEL_HOME}
 
-RUN cd ${SEATUNNEL_HOME}||sh bin/install-plugin.sh ${SEATUNNEL_VERSION}
+RUN cd ${SEATUNNEL_HOME} && sh bin/install-plugin.sh ${SEATUNNEL_VERSION}
