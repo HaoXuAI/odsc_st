@@ -13,4 +13,6 @@ WORKDIR /opt/seatunnel
 
 RUN bash bin/install-plugin.sh ${SEATUNNEL_VERSION}
 
+EXPOSE 5801
+
 ENTRYPOINT ["sh","-c"," bin/seatunnel-cluster.sh"]

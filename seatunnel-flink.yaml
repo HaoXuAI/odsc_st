@@ -3,7 +3,7 @@ kind: FlinkDeployment
 metadata:
   name: seatunnel-flink-streaming-example
 spec:
-  image: seatunnel:2.3.0-flink-1.13
+  image: seatunnel:2.3.3-flink-1.13
   flinkVersion: v1_13
   flinkConfiguration:
     taskmanager.numberOfTaskSlots: "2"

@@ -18,10 +18,12 @@ ENV SEATUNNEL_WEB_HOME seatunnel-web-dist/target/apache-seatunnel-web-${PROJECT_
 
 WORKDIR $SEATUNNEL_WEB_HOME
 
-EXPOSE 8080
+EXPOSE 8801
 
 ENV SEATUNNEL_HOME /opt/seatunnel
 
 ADD ./start.sh ./bin/start.sh
+ADD ./hazelcast-client.yaml ./conf/hazelcast-client.yaml
+ADD ./plugin-mapping.properties ./conf/plugin-mapping.properties
 
 CMD [ "/bin/bash", "bin/start.sh", "start" ]
