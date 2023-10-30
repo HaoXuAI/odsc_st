@@ -1,4 +1,4 @@
-FROM apache/spark:3.3.3-scala2.12-java11-ubuntu
+FROM openjdk:8
 
 USER root
 
@@ -9,6 +9,8 @@ RUN wget https://dlcdn.apache.org/seatunnel/${SEATUNNEL_VERSION}/apache-seatunne
 RUN tar -xzvf apache-seatunnel-${SEATUNNEL_VERSION}-bin.tar.gz
 RUN mv apache-seatunnel-${SEATUNNEL_VERSION} ${SEATUNNEL_HOME}
 
-WORKDIR ${SEATUNNEL_HOME}
+WORKDIR /opt/seatunnel
 
-RUN bin/install-plugin.sh ${SEATUNNEL_VERSION}
+RUN bash bin/install-plugin.sh ${SEATUNNEL_VERSION}
+
+ENTRYPOINT ["sh","-c"," bin/seatunnel-cluster.sh"]

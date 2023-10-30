@@ -1,0 +1,33 @@
+version: '3'
+services:
+  seatunnel-engine:
+    build:
+      dockerfile: engine.Dockerfile
+    ports:
+      - "5801:5801"
+    environment:
+      - config=/data/seatunnel.streaming.conf
+    volumes:
+      - ./seatunnel.streaming.conf:/data/seatunnel.streaming.conf
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5801/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build:
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      seatunnel-engine:
+        condition: service_healthy
+
+  frontend:
+    build:
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "5173:5173"
+
+

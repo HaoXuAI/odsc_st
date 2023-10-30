@@ -5,7 +5,7 @@ metadata:
 spec:
   type: Java
   mode: cluster
-  image: docker.io/library/seatunnel:2.3.0-spark-3.3.3
+  image: docker.io/library/seatunnel:2.3.3-spark-3.3.3
   imagePullPolicy: Never
   mainClass: org.apache.seatunnel.core.starter.spark.SeaTunnelSpark
   mainApplicationFile: "local:///opt/seatunnel/starter/seatunnel-spark-3-starter.jar"
