@@ -11,4 +11,7 @@ RUN mv apache-seatunnel-${SEATUNNEL_VERSION} ${SEATUNNEL_HOME}
 
 WORKDIR ${SEATUNNEL_HOME}
 
+RUN mkdir -p ./pluggins/jdbc/lib
+ADD ./snowflake-jdbc-3.13.29.jar ./pluggins/jdbc/lib/
+
 RUN bin/install-plugin.sh ${SEATUNNEL_VERSION}
